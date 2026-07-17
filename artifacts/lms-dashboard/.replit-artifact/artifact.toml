@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "AI LMS Dashboard"
+version = "1.0.0"
+id = "artifacts/lms-dashboard"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18386
+
+[services.development]
+run = "pnpm --filter @workspace/lms-dashboard run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/lms-dashboard", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/lms-dashboard/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18386"
+BASE_PATH = "/"

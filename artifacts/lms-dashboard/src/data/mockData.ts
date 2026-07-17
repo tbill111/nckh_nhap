@@ -1,0 +1,33 @@
+export const groupsData = [
+  { id: 1, name: 'Nhóm 01 — LMS System', members: 'Giang Thanh Tùng, Nguyễn Anh Minh', link: 'github.com/group01/lms', status: 'Hoàn thành', score: 8.5 },
+  { id: 2, name: 'Nhóm 02 — Online Exam', members: 'Trương Thảo Anh, Đặng Thị Thu Hương', link: 'github.com/group02/exam', status: 'Đang phân tích...', score: 7.2 },
+  { id: 3, name: 'Nhóm 03 — Quản lý KTX', members: 'Lê Văn Phúc, Ngô Thị Lan', link: 'github.com/group03/ktx', status: 'Hoàn thành', score: 9.1 },
+  { id: 4, name: 'Nhóm 04 — Chatbot CSKH', members: 'Phạm Minh Đức, Vũ Thị Hoa', link: 'github.com/group04/chatbot', status: 'Hoàn thành', score: 6.3 },
+  { id: 5, name: 'Nhóm 05 — E-Commerce', members: 'Đinh Quốc Hùng, Cao Thị Mai', link: 'github.com/group05/shop', status: 'Chưa nộp', score: 0 },
+  { id: 6, name: 'Nhóm 06 — IoT Dashboard', members: 'Bùi Văn Nam, Trần Thị Ngọc', link: 'github.com/group06/iot', status: 'Hoàn thành', score: 8.8 },
+  { id: 7, name: 'Nhóm 07 — HR System', members: 'Hoàng Đức Long, Lý Thị Bảo', link: 'github.com/group07/hr', status: 'Đang phân tích...', score: 7.5 },
+  { id: 8, name: 'Nhóm 08 — Food Delivery', members: 'Nguyễn Tuấn Kiệt, Phan Thị Yến', link: 'github.com/group08/food', status: 'Hoàn thành', score: 4.1 },
+];
+
+export const liveMonitorData = [
+  { id: 'SV001', name: 'Giang Thanh Tùng', pc: 'PC-01', progress: 75, status: 'Bình thường' },
+  { id: 'SV002', name: 'Nguyễn Anh Minh', pc: 'PC-02', progress: 60, status: 'Cảnh báo chuyển Tab' },
+  { id: 'SV003', name: 'Trương Thảo Anh', pc: 'PC-03', progress: 90, status: 'Bình thường' },
+  { id: 'SV004', name: 'Đặng Thị Thu Hương', pc: 'PC-04', progress: 45, status: 'Sử dụng AI trái phép' },
+  { id: 'SV005', name: 'Lê Văn Phúc', pc: 'PC-05', progress: 55, status: 'Bình thường' },
+  { id: 'SV006', name: 'Ngô Thị Lan', pc: 'PC-06', progress: 80, status: 'Cảnh báo chuyển Tab' },
+  { id: 'SV007', name: 'Phạm Minh Đức', pc: 'PC-07', progress: 30, status: 'Sử dụng AI trái phép' },
+  { id: 'SV008', name: 'Vũ Thị Hoa', pc: 'PC-08', progress: 70, status: 'Bình thường' },
+  { id: 'SV009', name: 'Đinh Quốc Hùng', pc: 'PC-09', progress: 85, status: 'Bình thường' },
+  { id: 'SV010', name: 'Cao Thị Mai', pc: 'PC-10', progress: 40, status: 'Cảnh báo chuyển Tab' },
+  { id: 'SV011', name: 'Bùi Văn Nam', pc: 'PC-11', progress: 65, status: 'Bình thường' },
+  { id: 'SV012', name: 'Trần Thị Ngọc', pc: 'PC-12', progress: 50, status: 'Bình thường' },
+  { id: 'SV013', name: 'Hoàng Đức Long', pc: 'PC-13', progress: 95, status: 'Bình thường' },
+  { id: 'SV014', name: 'Lý Thị Bảo', pc: 'PC-14', progress: 25, status: 'Cảnh báo chuyển Tab' },
+  { id: 'SV015', name: 'Nguyễn Tuấn Kiệt', pc: 'PC-15', progress: 70, status: 'Bình thường' },
+  { id: 'SV016', name: 'Phan Thị Yến', pc: 'PC-16', progress: 88, status: 'Bình thường' },
+  { id: 'SV017', name: 'Đỗ Quang Vinh', pc: 'PC-17', progress: 35, status: 'Cảnh báo chuyển Tab' },
+  { id: 'SV018', name: 'Lưu Thị Phương', pc: 'PC-18', progress: 72, status: 'Bình thường' },
+  { id: 'SV019', name: 'Tống Minh Khoa', pc: 'PC-19', progress: 58, status: 'Bình thường' },
+  { id: 'SV020', name: 'Hà Thị Diệu', pc: 'PC-20', progress: 92, status: 'Bình thường' },
+];

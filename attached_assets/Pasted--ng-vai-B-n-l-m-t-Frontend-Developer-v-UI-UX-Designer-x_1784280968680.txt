@@ -1,0 +1,62 @@
+Đóng vai: Bạn là một Frontend Developer và UI/UX Designer xuất sắc, chuyên nghiệp trong việc xây dựng các hệ thống Dashboard phức tạp bằng React (Vite) và Tailwind CSS.
+
+Nhiệm vụ: Xây dựng toàn bộ giao diện (Frontend) cho một Hệ thống Hỗ trợ Giảng dạy và Đánh giá Lập trình tích hợp AI (AI-powered Programming Education LMS). Giao diện phải mang phong cách hiện đại, tối ưu không gian hiển thị (high-density data), tuyệt đối tránh các khoảng trắng thừa vô định (wasted whitespace), và phải đồng bộ 100% ngôn ngữ Tiếng Việt chuẩn mực.
+
+1. Hệ thống Màu sắc (Design System & Theme)
+Hệ thống sử dụng chế độ Dark Mode làm mặc định, lấy cảm hứng từ giao diện GitHub. Bạn phải thiết lập cấu hình Tailwind (tailwind.config.js) theo chính xác các mã màu sau:
+
+Màu nền chủ đạo (Background/Primary): #0D1117 (Charcoal Black) - Dùng cho toàn bộ nền trang và các thẻ chứa nội dung chính.
+
+Màu văn bản chính (Text Primary): Trắng xám (ví dụ: #E6EDF3) để nổi bật trên nền #0D1117.
+
+Màu thành công (Success Green): #2EA44F - Dùng cho badge "Đã duyệt", "Test Passed", thanh tiến trình hoàn thành.
+
+Màu nhấn (Accent Blue): #0969DA - Dùng cho nút bấm chính (Primary Button như "Nộp bài", "Phân tích AI"), tab đang active, và các đường link.
+
+Màu cảnh báo lỗi (Error Coral): #FD8C73 - Dùng cho badge "Vi phạm", "Báo cáo gian lận", cảnh báo Agent, hoặc điểm đóng góp thấp.
+
+Màu viền và chữ phụ (Muted Gray): #30363D - Dùng cho các đường divider, viền bảng (border), viền card, và văn bản phụ (secondary text).
+
+2. Bố cục tổng thể (Layout Structure)
+
+Sidebar (Trái): Thanh điều hướng cố định (rộng khoảng 240px) có viền phải màu #30363D. Bao gồm các menu: Tổng quan, Lớp học, Bài tập & Đồ án, Đánh giá AI, Giám sát phòng máy, Cài đặt.
+
+Header (Trên): Chứa thanh tìm kiếm (Search repo/sinh viên), Avatar người dùng, và thông báo (Notification chuông).
+
+Main Content: Khu vực hiển thị dữ liệu dạng lưới (Grid/Flexbox) chặt chẽ.
+
+3. Các Màn hình Yêu cầu thiết kế chi tiết (Tạo các component hoặc page tương ứng)
+
+Màn hình A: Dashboard Giảng viên (Tổng quan & Cảnh báo)
+
+Hiển thị các chỉ số thống kê trên cùng (Cards): Tổng số sinh viên, Số repo đã nộp, Số repo bị gắn cờ gian lận (màu #FD8C73), Số dự án đạt chuẩn lưu trữ.
+
+Một bảng dữ liệu (Data Table) danh sách các nhóm đang làm đồ án. Các cột: Tên nhóm, Link Git, Trạng thái phân tích AI (Loading/Hoàn thành), Điểm đóng góp trung bình, Hành động (Nút "Xem chi tiết"). Sử dụng dummy data sinh viên Việt Nam (ví dụ: Giang Thanh Tùng, Nguyễn Anh Minh, Trương Thảo Anh, Đặng Thị Thu Hương).
+
+Màn hình B: Chi tiết Đánh giá AI (Repo & Điểm đóng góp)
+
+Chia đôi màn hình (Split view).
+
+Cột trái (Chi tiết Git): Danh sách thành viên, biểu đồ tròn/thanh phân bổ mức độ đóng góp (Contribution Score). Lịch sử commit dạng timeline hiển thị rõ ai push đoạn code nào.
+
+Cột phải (AI Report & Câu hỏi vấn đáp): Khung hiển thị lý do AI chấm điểm (Explainable AI). Khung danh sách 3-5 câu hỏi vấn đáp được AI sinh ra tự động (gắn nhãn: Cơ bản, Nâng cao, Phản biện). Nút hành động: "Ghi đè điểm" (Màu #30363D), "Phê duyệt & Lưu ZIP" (Màu #2EA44F).
+
+Màn hình C: Màn hình Giám sát Máy trạm (Live Monitoring)
+
+Giao diện dạng control panel cường độ cao.
+
+Một bảng danh sách sinh viên đang thi. Cột trạng thái hiển thị: "Bình thường" (màu Xám), "Cảnh báo chuyển Tab" (Màu Vàng), "Sử dụng AI trái phép" (Màu #FD8C73).
+
+Một khung Log thời gian thực (Terminal-like view) cuộn liên tục bên dưới để hiển thị nhật ký Websocket nhận từ Desktop Agent.
+
+4. Yêu cầu kỹ thuật & Thư viện
+
+Sử dụng thư viện icon: lucide-react để các icon tinh tế và đồng bộ.
+
+Sử dụng recharts để vẽ biểu đồ điểm đóng góp nếu cần.
+
+Các bảng (Table) phải có đường viền rõ ràng bằng màu Muted Gray (#30363D), padding nhỏ gọn (ví dụ: py-2 px-3) để tối ưu dữ liệu hiển thị (data-dense).
+
+Mock data (dữ liệu mẫu) phải hoàn toàn bằng tiếng Việt, logic phù hợp với ngữ cảnh đào tạo CNTT (ví dụ tên project: "Hệ thống quản lý LMS", "App thi trực tuyến").
+
+Hãy tạo ra một bản prototype hoàn chỉnh có thể tương tác (chuyển đổi giữa các tab/menu) dựa trên các yêu cầu trên. Bắt đầu ngay với mã nguồn React!
