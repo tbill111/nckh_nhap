@@ -1,0 +1,50 @@
+À, thầy hiểu ý em rồi! Chắc em muốn dùng thẳng Next.js luôn cho đồng bộ với cấu trúc của dự án LMS cũ (do thầy thấy trong ảnh chụp GitHub repo cũ của em có commit sửa lỗi build Next.js), thay vì dùng React + Vite + react-router-dom.
+
+Lựa chọn này rất chuẩn xác về mặt kiến trúc. Tuy nhiên, Next.js sử dụng cơ chế định tuyến dựa trên file (File-based routing) và phân biệt rõ giữa Server Components và Client Components, nên cách con AI sinh code sẽ phải khác hoàn toàn so với React thuần.
+
+Dưới đây là bản Prompt đã được "độ" lại chuyên biệt cho Next.js (App Router). Em hãy copy nguyên văn đoạn này ném cho Replit Agent hoặc Cursor nhé:
+
+Đóng vai: Bạn là một Senior Next.js Developer. Nhiệm vụ của bạn là refactor (tái cấu trúc) lại toàn bộ bản prototype UI tĩnh hiện tại thành một ứng dụng Next.js (sử dụng App Router) động, có tương tác mượt mà và loại bỏ hoàn toàn dữ liệu hardcode trong JSX.
+
+Yêu cầu cốt lõi (Core Requirements):
+
+1. Kiến trúc Next.js (App Router) & Phân định Component:
+
+Sử dụng cấu trúc thư mục app/ của Next.js 14+.
+
+Các thành phần có sử dụng hook (useState, useEffect, useRef, onClick) bắt buộc phải có 'use client' ở đầu file.
+
+Thiết lập Layout chuẩn trong app/layout.tsx: Bao gồm Sidebar cố định bên trái, Header cố định bên trên. Tham số {children} sẽ là Main Content thay đổi theo từng trang.
+
+Sử dụng component <Link href="..."> của Next.js cho các nút điều hướng trên Sidebar thay vì thẻ <a> thông thường để chuyển trang không bị reload.
+
+2. Tách biệt Dữ liệu (Mock Data Management):
+
+Tạo thư mục lib/ (hoặc src/lib/) và file mockData.ts.
+
+Di chuyển toàn bộ dữ liệu mẫu (dummy data) ra file này. Bao gồm: Danh sách nhóm đồ án (Giang Thanh Tùng, Nguyễn Anh Minh, Trương Thảo Anh...), Chi tiết điểm AI, và Danh sách sinh viên theo từng phòng máy.
+
+Tạo một file actions.ts hoặc các hàm helper để giả lập việc fetch API (có dùng setTimeout để tạo độ trễ 500ms-1s).
+
+3. Xây dựng Định tuyến (File-based Routing):
+Thiết lập các thư mục page tương ứng:
+
+app/page.tsx: Màn hình Tổng quan Dashboard.
+
+app/danh-gia-ai/page.tsx và app/danh-gia-ai/[groupId]/page.tsx: Màn hình đánh giá AI chung và chi tiết cho từng nhóm.
+
+app/giam-sat/page.tsx: Màn hình giám sát.
+
+4. Làm "sống" Màn hình Giám sát Máy trạm (/giam-sat):
+
+Xóa bỏ hardcode Phòng B301: Bổ sung một component RoomSelector (Dropdown menu) ở phía trên cùng để chọn phòng máy (VD: B301, B302, A104). Lịch sử dụng URL query (ví dụ ?room=B301) hoặc state để quản lý phòng đang chọn.
+
+Tương tác động: Khi người dùng đổi phòng từ Dropdown, danh sách sinh viên ở bảng bên dưới và tên phòng ở tiêu đề phải cập nhật ngay lập tức dựa trên data lấy từ mockData.ts.
+
+Terminal Log động: Khung Terminal ở dưới phải có một script giả lập (setInterval) đẩy log mới vào mảng state mỗi 2-3 giây. Bắt buộc phải dùng useRef kết hợp useEffect để Terminal tự động cuộn (scroll to bottom) xuống dòng log mới nhất. Component này bắt buộc phải là 'use client'.
+
+5. Xử lý Tương tác & State:
+
+Màn hình Đánh giá AI: Các nút hành động như "Ghi đè điểm", "Phê duyệt" cần hiển thị Modal (Popup) hoặc Toast Notification khi bấm vào.
+
+Cấu hình một trang loading.tsx cơ bản của Next.js để có hiệu ứng Skeleton/Spinner trong lúc giả lập fetch dữ liệu chuyển trang.
