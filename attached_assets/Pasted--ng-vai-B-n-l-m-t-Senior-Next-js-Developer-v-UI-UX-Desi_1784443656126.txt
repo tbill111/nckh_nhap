@@ -1,0 +1,61 @@
+Đóng vai: Bạn là một Senior Next.js Developer và UI/UX Designer. Nhiệm vụ của bạn là refactor toàn bộ bản prototype UI tĩnh hiện tại thành một ứng dụng Next.js (App Router) động. Phải gỡ bỏ các trang placeholder "Tính năng đang được phát triển" và xây dựng đầy đủ các chức năng quản lý học vụ dựa trên dữ liệu mock.
+
+Yêu cầu cốt lõi (Core Requirements):
+
+1. Kiến trúc Next.js & Layout:
+
+Sử dụng thư mục app/ của Next.js. Các component có tính tương tác (useState, onClick) phải có 'use client'.
+
+Thiết lập Layout chuẩn trong app/layout.tsx: Sidebar trái cố định (dùng <Link> của Next.js), Header trên cố định. Nội dung chính ở giữa.
+
+Theme màu "Classic Developer": Background #0D1117, Muted Gray #30363D cho viền, Success Green #2EA44F, Accent Blue #0969DA, Error Coral #FD8C73.
+
+2. Tách biệt Dữ liệu (Mock Data Management):
+
+Tạo file lib/mockData.ts chứa toàn bộ dữ liệu mẫu mang tên tiếng Việt thực tế.
+
+Dữ liệu bao gồm: Danh sách Lớp học (VD: 65 HTTT), Danh sách Sinh viên (VD: Giang Thanh Tùng, Trương Thảo Anh...), Danh sách Đồ án (VD: SmartLife App), dữ liệu điểm AI, log giám sát.
+
+Viết các hàm helper mô phỏng fetch API có độ trễ (setTimeout).
+
+3. Xây dựng Định tuyến & Các màn hình chi tiết (File-based Routing):
+
+A. Màn hình Lớp học (app/lop-hoc/page.tsx):
+
+Hiển thị danh sách các lớp học phần đang phụ trách dạng Grid/Card.
+
+Khi click vào một lớp, hiển thị bảng Danh sách sinh viên (Mã SV, Họ tên, Nhóm dự án).
+
+Có nút (Button màu Accent Blue) "Tạo lớp học mới" và "Thêm sinh viên" (khi bấm sẽ mở ra Modal form nhập liệu).
+
+B. Màn hình Bài tập & Đồ án (app/bai-tap/page.tsx):
+
+Hiển thị bảng danh sách các Đồ án đã giao. Các cột: Tên đồ án, Lớp áp dụng, Hạn nộp (Deadline), Trạng thái nộp bài (Timeline/Milestone).
+
+Có nút "Tạo đồ án mới". Khi bấm mở Modal yêu cầu nhập: Tên bài tập, Mô tả, Deadline, và Input nhập link Repo mẫu (nếu có).
+
+Click vào một Đồ án sẽ ra danh sách các nhóm đã nộp public URL Repository (GitHub/GitLab).
+
+C. Màn hình Đánh giá AI (app/danh-gia-ai/page.tsx & [groupId]):
+
+Bảng danh sách các nhóm và trạng thái phân tích AI.
+
+Vào chi tiết: Split view. Trái là Biểu đồ đóng góp (Recharts) và Timeline commit. Phải là AI Report giải thích lý do chấm điểm và bộ 5 câu hỏi vấn đáp (Cơ bản/Nâng cao/Phản biện). Có nút "Ghi đè điểm" và "Phê duyệt (Lưu ZIP)".
+
+D. Màn hình Giám sát Máy trạm (app/giam-sat/page.tsx):
+
+Phải có component RoomSelector (Dropdown) trên cùng để chọn phòng máy (B301, B302...).
+
+Bảng trạng thái live của sinh viên (Progress bar, Cảnh báo Tab/AI). Dữ liệu thay đổi theo phòng đã chọn.
+
+Terminal Log động ở dưới: Dùng setInterval đẩy log mới vào mỗi 2 giây, kết hợp useRef để tự động cuộn (scroll to bottom).
+
+4. Xử lý Tương tác & Trạng thái (Interactions & States):
+
+Tất cả các nút hành động (Tạo mới, Ghi đè, Phê duyệt) đều phải log ra console giả lập thao tác và hiện Toast Notification báo thành công.
+
+Sử dụng loading.tsx của Next.js để làm hiệu ứng Skeleton Loader khi chuyển trang.
+
+Hãy lập tức viết mã nguồn cho toàn bộ hệ thống này, đảm bảo tính liên kết dữ liệu giữa các trang (Ví dụ tạo bài tập ở màn A thì sinh viên nộp bài sẽ hiện ra ở màn B).
+
+Việc đưa ngay các module cốt lõi này vào từ đầu là cực kỳ quan trọng để giảng viên có luồng thao tác hoàn chỉnh (Tạo Lớp -> Giao Đồ Án -> Nhận Link Git -> AI Phân Tích).
