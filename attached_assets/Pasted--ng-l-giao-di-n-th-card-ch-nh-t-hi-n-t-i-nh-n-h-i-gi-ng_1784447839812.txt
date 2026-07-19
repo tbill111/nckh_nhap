@@ -1,0 +1,45 @@
+Đúng là giao diện thẻ card chữ nhật hiện tại nhìn hơi giống các dashboard quản lý tiến độ thông thường (như Jira/Trello), chưa toát lên hẳn cái "chất" của một phần mềm quản lý phòng máy thực thụ.
+
+Ý tưởng chuyển sang dùng Icon màn hình máy tính kết hợp hiệu ứng phát sáng (Glow) sẽ giúp giao diện trông xịn xò và trực quan hơn rất nhiều, giống hệt các phần mềm điều hành trung tâm (Command Center).
+
+Em hãy copy nguyên đoạn prompt dưới đây ném cho Replit để nó "độ" lại cái Grid View này nhé:
+
+Nhiệm vụ nâng cấp UI cho chế độ "Sơ đồ" (Grid View) tại trang Giám sát (/giam-sat):
+
+Giao diện dạng thẻ card (Card) cơ bản hiện tại hơi đơn điệu. Hãy thiết kế lại component hiển thị của chế độ Grid View sao cho giống một sơ đồ phòng máy tính vật lý thực sự.
+
+Yêu cầu chi tiết:
+
+Sử dụng Icon Máy tính làm trung tâm:
+
+Trọng tâm của mỗi ô lưới không còn là một cái hộp text nữa, mà là một Icon Màn hình máy tính (Monitor) kích thước lớn (Sử dụng icon Monitor từ thư viện lucide-react, size khoảng 48 hoặc 64).
+
+Đặt icon này nằm chính giữa ô.
+
+Thể hiện Trạng thái (Color-coding & Glow Effect):
+
+Phản ánh trạng thái vi phạm trực tiếp lên màn hình của Icon máy tính bằng cách đổi màu đường nét (stroke) và thêm hiệu ứng phát sáng (Glow/Drop-shadow):
+
+Bình thường: Icon màu xám #30363D hoặc xanh lá #2EA44F, không phát sáng.
+
+Cảnh báo (Chuyển Tab): Icon màu Vàng sáng (#EAB308), kèm hiệu ứng drop-shadow-[0_0_10px_rgba(234,179,8,0.8)] và animate-pulse đập nhẹ.
+
+Gian lận (Dùng AI): Icon màu Đỏ rực (#FD8C73), kèm hiệu ứng phát sáng đỏ drop-shadow-[0_0_12px_rgba(253,140,115,0.9)].
+
+Bố cục thông tin trên mỗi máy (Layout per PC):
+
+Bên trong màn hình Icon (hoặc nổi ngay trên icon): Đặt mã máy tính (VD: PC-01) ở vị trí trung tâm màn hình icon với font chữ đậm, nhỏ gọn.
+
+Bên dưới Icon: Hiển thị tên sinh viên (VD: Tùng T.) căn giữa (text-center).
+
+Dưới cùng: Một thanh Progress bar mini mỏng bé xíu thể hiện tiến độ bài làm.
+
+Góc phải trên cùng của khu vực (khoảng không gian trống) có thể gắn thêm một Badge icon nhỏ (Dấu chấm than ⚠️ cho cảnh báo, Dấu X 🛑 cho gian lận) để tăng độ nhận diện.
+
+Tối ưu CSS Grid:
+
+Căn giữa toàn bộ nội dung trong mỗi ô (flex-col, items-center, justify-center).
+
+Bỏ các đường viền (border) cứng nhắc của thẻ Card cũ, để các màn hình máy tính nổi bật trên nền #0D1117, tạo cảm giác một không gian phòng lab mở.
+
+Hãy cập nhật code ngay lập tức để giao diện Grid View trông thật ngầu và đậm chất Cyber/Command Center!

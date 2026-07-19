@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   ShieldCheck, AlertTriangle, ShieldX, Terminal, ChevronDown,
-  LayoutList, LayoutGrid,
+  LayoutList, LayoutGrid, Monitor, XCircle,
 } from 'lucide-react';
 import { roomData, MonitorStudent } from '../data/mockData';
 import { useToast } from '@/hooks/use-toast';
@@ -255,28 +255,28 @@ function ListView({ students }: { students: MonitorStudent[] }) {
   );
 }
 
-// ── Grid View (Device Map) ─────────────────────────────────────────────────────
+// ── Grid View (Command Center — Monitor Icon Map) ──────────────────────────────
 function GridView({ students }: { students: MonitorStudent[] }) {
   return (
-    <div className="overflow-y-auto flex-1 custom-scrollbar p-4">
+    <div className="overflow-y-auto flex-1 custom-scrollbar px-5 py-4">
       {/* Legend */}
-      <div className="flex items-center gap-5 mb-4 text-[11px] text-[#8B949E]">
-        <span className="font-semibold text-[#8B949E] uppercase tracking-wider">Chú thích:</span>
-        <span className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm border border-[#30363D] inline-block bg-[#0D1117]" />
+      <div className="flex items-center gap-6 mb-5 text-[11px] text-[#8B949E]">
+        <span className="font-semibold uppercase tracking-widest">Chú thích:</span>
+        <span className="flex items-center gap-2">
+          <Monitor size={13} color="#2EA44F" />
           Bình thường
         </span>
-        <span className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm border border-[#E3B341] inline-block bg-[#E3B341]/10" />
-          Cảnh báo
+        <span className="flex items-center gap-2">
+          <Monitor size={13} color="#EAB308" />
+          Cảnh báo chuyển Tab
         </span>
-        <span className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm border border-[#FD8C73] inline-block bg-[#FD8C73]/15" />
-          Gian lận AI
+        <span className="flex items-center gap-2">
+          <Monitor size={13} color="#FD8C73" />
+          Sử dụng AI trái phép
         </span>
       </div>
 
-      <div className="grid grid-cols-4 xl:grid-cols-5 gap-3">
+      <div className="grid grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-x-4 gap-y-6">
         {students.map(s => <PCCard key={s.id} student={s} />)}
       </div>
     </div>
@@ -285,82 +285,85 @@ function GridView({ students }: { students: MonitorStudent[] }) {
 
 function PCCard({ student: s }: { student: MonitorStudent }) {
   const isFraud = s.status === 'Sử dụng AI trái phép';
-  const isWarn = s.status === 'Cảnh báo chuyển Tab';
+  const isWarn  = s.status === 'Cảnh báo chuyển Tab';
 
+  // Monitor stroke colour & glow
+  const iconColor  = isFraud ? '#FD8C73' : isWarn ? '#EAB308' : '#2EA44F';
+  const glowStyle  = isFraud
+    ? { filter: 'drop-shadow(0 0 10px rgba(253,140,115,0.9))' }
+    : isWarn
+    ? { filter: 'drop-shadow(0 0 10px rgba(234,179,8,0.8))' }
+    : {};
+  const pulseClass = isWarn ? 'animate-pulse' : '';
+
+  // Progress bar colour
   const progressColor =
     s.progress < 30 ? '#FD8C73' : s.progress <= 60 ? '#E3B341' : '#2EA44F';
 
-  // Card appearance based on status
-  const cardCls = isFraud
-    ? 'bg-[#FD8C73]/10 border-[#FD8C73] shadow-[0_0_12px_rgba(253,140,115,0.25)]'
-    : isWarn
-    ? 'bg-[#E3B341]/8 border-[#E3B341] animate-pulse shadow-[0_0_10px_rgba(227,179,65,0.15)]'
-    : 'bg-[#0D1117] border-[#30363D] hover:border-[#8B949E]';
-
-  // Abbreviate the name: first word + last word initial
-  const nameParts = s.name.trim().split(' ');
+  // Short name: last-name + first-name initial  (VD: "Tùng G.")
+  const parts = s.name.trim().split(' ');
   const shortName =
-    nameParts.length >= 3
-      ? `${nameParts[nameParts.length - 1]} ${nameParts[nameParts.length - 2][0]}.`
+    parts.length >= 2
+      ? `${parts[parts.length - 1]} ${parts[0][0]}.`
       : s.name;
 
   return (
-    <div
-      className={`relative border rounded-md p-2.5 flex flex-col gap-1.5 cursor-default select-none transition-all duration-300 group ${cardCls}`}
-    >
-      {/* PC label + status icon */}
-      <div className="flex items-center justify-between">
-        <span className="font-mono font-bold text-xs text-[#0969DA]">{s.pc}</span>
-        {isFraud && <ShieldX size={12} className="text-[#FD8C73] shrink-0" />}
-        {isWarn && <AlertTriangle size={12} className="text-[#E3B341] shrink-0" />}
-        {!isFraud && !isWarn && (
-          <span className="w-1.5 h-1.5 rounded-full bg-[#2EA44F] shrink-0" />
-        )}
-      </div>
+    <div className="relative flex flex-col items-center gap-1.5 cursor-default select-none group">
 
-      {/* Student name */}
-      <div className="text-center py-1.5 flex-1 flex items-center justify-center min-h-[28px]">
+      {/* ── Badge (top-right of icon zone) ── */}
+      {(isFraud || isWarn) && (
+        <div className="absolute top-0 right-0 z-10 translate-x-1 -translate-y-1">
+          {isFraud
+            ? <XCircle size={14} className="text-[#FD8C73] drop-shadow-[0_0_6px_rgba(253,140,115,0.9)]" />
+            : <AlertTriangle size={13} className="text-[#EAB308] drop-shadow-[0_0_6px_rgba(234,179,8,0.8)]" />
+          }
+        </div>
+      )}
+
+      {/* ── Monitor icon zone ── */}
+      <div className={`relative ${pulseClass}`} style={glowStyle}>
+        <Monitor size={56} color={iconColor} strokeWidth={1.4} />
+
+        {/* PC code overlaid on the screen face of the icon */}
         <span
-          className={`text-[11px] font-medium leading-tight text-center ${
-            isFraud ? 'text-[#FD8C73]' : isWarn ? 'text-[#E3B341]' : 'text-[#C9D1D9]'
-          }`}
+          className="absolute inset-0 flex items-center justify-center font-mono font-bold text-[10px] tracking-tight pb-3"
+          style={{ color: iconColor }}
         >
-          {shortName}
+          {s.pc}
         </span>
       </div>
 
-      {/* Progress bar */}
-      <div>
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-[9px] text-[#8B949E] uppercase tracking-wider">Tiến độ</span>
-          <span
-            className="text-[10px] font-bold font-mono"
-            style={{ color: progressColor }}
-          >
-            {s.progress}%
-          </span>
-        </div>
-        <div className="w-full bg-[#161B22] rounded-full h-1 border border-[#21262D]">
+      {/* ── Student name ── */}
+      <span
+        className="text-[11px] font-medium text-center leading-tight max-w-[80px] truncate"
+        style={{ color: isFraud ? '#FD8C73' : isWarn ? '#EAB308' : '#C9D1D9' }}
+      >
+        {shortName}
+      </span>
+
+      {/* ── Mini progress bar ── */}
+      <div className="w-full max-w-[72px]">
+        <div className="w-full bg-[#161B22] rounded-full h-[3px]">
           <div
-            className="h-1 rounded-full transition-all duration-500"
+            className="h-[3px] rounded-full transition-all duration-500"
             style={{ width: `${s.progress}%`, backgroundColor: progressColor }}
           />
         </div>
+        <span
+          className="block text-center text-[9px] font-mono mt-0.5"
+          style={{ color: progressColor }}
+        >
+          {s.progress}%
+        </span>
       </div>
 
-      {/* Tooltip on hover */}
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-        <div className="bg-[#21262D] border border-[#30363D] rounded px-2.5 py-1.5 text-[11px] whitespace-nowrap shadow-lg">
-          <div className="font-medium text-[#E6EDF3]">{s.name}</div>
+      {/* ── Hover tooltip ── */}
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-30 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150 whitespace-nowrap">
+        <div className="bg-[#21262D] border border-[#30363D] rounded px-3 py-2 text-[11px] shadow-xl">
+          <div className="font-semibold text-[#E6EDF3]">{s.name}</div>
           <div className="text-[#8B949E] mt-0.5">{s.id} · {s.pc}</div>
-          <div
-            className="mt-0.5 font-medium"
-            style={{ color: isFraud ? '#FD8C73' : isWarn ? '#E3B341' : '#8B949E' }}
-          >
-            {s.status}
-          </div>
+          <div className="mt-0.5 font-medium" style={{ color: iconColor }}>{s.status}</div>
         </div>
-        {/* Arrow */}
         <div className="w-2 h-2 bg-[#21262D] border-r border-b border-[#30363D] rotate-45 mx-auto -mt-1" />
       </div>
     </div>
